@@ -12,6 +12,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
 model Agent {
   id           Int    @id @default(autoincrement())
   badge_number Int    @unique
@@ -23,7 +24,7 @@ model Annonce {
   titre              String
   description        String
   prix               Int
-  date_publication   DateTime    @default(now())
+  date_publication   DateTime     @default(now())
   type_bienId        Int
   nombre_pieces      Int
   nombre_chambres    Int
@@ -31,17 +32,17 @@ model Annonce {
   surface            Int
   meuble             String
   villeId            Int
-  nom_vendeur        String
-  img_bien           String
+  nom_vendeur        String?
+  img_bien           String?
   equipements        Equipement[]
   ville              Ville        @relation(fields: [villeId], references: [id])
   type_bien          TypeBien     @relation(fields: [type_bienId], references: [id])
 }
 
 model Equipement {
-  id        Int     @id @default(autoincrement())
-  nom       String
-  annonces  Annonce[]
+  id       Int       @id @default(autoincrement())
+  nom      String
+  annonces Annonce[]
 }
 
 model TypeBien {

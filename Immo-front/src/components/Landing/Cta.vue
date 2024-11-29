@@ -11,14 +11,14 @@
         <div class="announcement-container">
             <div class="announcement-card">
                 <img src="@/assets/home.png" alt="luxury house">
-                <div class="announcement-text">
+                <div class="announcement-text" @click="navigateToPublication">
                     Add an announcement
                     <i class="fas fa-arrow-right"></i>
                 </div>
             </div>
             <div class="announcement-card">
                 <img src="@/assets/home.png" alt="luxury house">
-                <div class="announcement-text">
+                <div class="announcement-text" @click="navigateToAllAnnonces">
                     View announcements
                     <i class="fas fa-arrow-right"></i>
                 </div>
@@ -27,6 +27,21 @@
     </div>
 
 </template>
+<script>
+
+export default {
+    methods: {
+        navigateToPublication() {
+            this.$router.push('/publication');
+        },
+        navigateToAllAnnonces() {
+            this.$router.push('/announcements');
+        }
+    }
+}
+
+
+</script>
 
 <style scoped>
 .container {
@@ -94,7 +109,7 @@
 .title {
     position: absolute;
     bottom: 2%;
-    right: -67%;
+    right: -62%;
     z-index: 999999999;
     white-space: nowrap;
     color: var(--white, #FEFEFE);

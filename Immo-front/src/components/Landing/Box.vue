@@ -1,28 +1,49 @@
 <template>
-    <div class="container-box ">
+    <div v-if="announcement" class="container-box">
         <div class="image-container">
-            <img src="@/assets/home.png" alt="cta" />
+            <img :src="announcement.img_bien || '/default-image.jpg'" alt="Annonce Image" />
         </div>
         <div class="announcement-container">
             <div class="listing">
                 <div class="details">
-                    <h2>Château</h2>
+                    <h2>{{ announcement.titre }}</h2>
                     <ul>
-                        <li>Number of rooms: </li>
-                        <li>Number of square metres: </li>
-                        <li>Status: </li>
-                        <li>Price: €</li>
+                        <li>Number of rooms: {{ announcement.nombre_pieces }}</li>
+                        <li>Number of square metres: {{ announcement.surface }}</li>
+                        <li>Status: Available</li>
+                        <li>Price: {{ announcement.prix }}€</li>
                     </ul>
-                    <button @click="">En Savoir Plus</button>
+                    <button @click="goToDetailPage">En Savoir Plus</button>
                 </div>
             </div>
         </div>
     </div>
-
-
 </template>
 
-<style>
+
+<script>
+export default {
+    name: "Box",
+    props: {
+        announcement: {
+            type: Object,
+            required: true,
+        },
+    },
+    methods: {
+        goToDetailPage() {
+            this.$router.push({
+                name: "announcementDetail",
+                params: { id: this.announcement.id },
+            });
+        },
+    },
+};
+</script>
+
+
+
+<style scoped>
 .container-box {
     padding: 20px;
     display: flex;
@@ -36,11 +57,12 @@
     margin: 0 auto;
 }
 
-.image-container{
+.image-container {
     flex: 1;
-   display: flex    ;
-   justify-content: end;
+    display: flex;
+    justify-content: end;
 }
+
 .image-container img {
     width: 80%;
     object-fit: cover;
@@ -56,7 +78,6 @@
     height: 100%;
     background-color: #1F2324;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
     position: relative;
     right: 25%;
 }
@@ -72,7 +93,6 @@
     text-align: center;
     color: white;
     width: 100%;
-
 }
 
 .details ul {
@@ -92,7 +112,6 @@
     border-radius: 10px;
     background: #FFF;
     color: #AD8C72;
-    ;
     border: 1px solid #AD8C72;
     cursor: pointer;
 }

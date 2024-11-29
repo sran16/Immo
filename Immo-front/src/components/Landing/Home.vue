@@ -34,11 +34,10 @@ export default {
     </section>
     <section>
         <Box />
-        <Box />
     </section>
 </template>
 
-<style>
+<style scoped>
 .home-page,
 .home-container,
 .home-content {
@@ -54,9 +53,6 @@ export default {
     z-index: 0;
 }
 
-/* .home {
-    filter: sepia(60%) contrast(1.2) brightness(0.9);
-} */
 
 h1 {
     position: absolute;

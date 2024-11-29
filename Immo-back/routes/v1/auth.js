@@ -36,14 +36,11 @@ router.get("/agents", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     const { badge_number, password } = req.body;
-    console.log("Received login attempt:", req.body); // Log incoming request data
-
-    // Find the agent by badge number
+    console.log("Received login attempt:", req.body); 
     const agent = await prisma.agent.findUnique({
       where: { badge_number },
     });
 
-    // Check if agent exists
     if (!agent) {
       console.log("Agent not found for badge number:", badge_number);
       return next(createError(401, "Badge number or password incorrect"));
@@ -56,10 +53,9 @@ router.post("/login", async (req, res, next) => {
       return next(createError(401, "Badge number or password incorrect"));
     }
 
-    // Success, return a success message
     res.json({ message: "Login successful" });
   } catch (error) {
-    console.error("Error during login:", error); // Log the full error
+    console.error("Error during login:", error);
     next(createError(500, "Error during login"));
   }
 });

@@ -1,43 +1,72 @@
 <template>
-<div class="filter-container">
-    <div class="filter-bar">
-        <div class="filter-item">
-            <label for="city">Ville/City</label>
-            <input id="city" v-model="selectedCity" type="text" placeholder="Entrez la ville">
+    <div>
+        <div class="filter-container">
+            <div class="filter-bar">
+                <!-- Ville Filter -->
+                <div class="filter-item">
+                    <label for="city">Ville/City</label>
+                    <input id="city" v-model="selectedCity" type="text" placeholder="Entrez la ville" />
+                </div>
+
+                <!-- Type de bien Filter -->
+                <div class="filter-item">
+                    <label for="propertyType">Type de bien</label>
+                    <input id="propertyType" v-model="selectedPropertyType" type="text"
+                        placeholder="Entrez le type de bien" />
+                </div>
+
+                <!-- Recherche Button -->
+                <button class="search-button" @click="search">
+                    Rechercher
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
         </div>
-        <div class="filter-item">
-            <label for="propertyType">Type de bien</label>
-            <input id="propertyType" v-model="selectedPropertyType" type="text" placeholder="Entrez le type de bien">
+
+        <!-- Résultats de recherche -->
+        <div v-if="announcements.length" class="search-results">
+            <div v-for="announcement in announcements" :key="announcement.id" class="announcement-box">
+                <h2>{{ announcement.titre }}</h2>
+                <p>{{ announcement.description }}</p>
+                <p>Prix: {{ announcement.prix }}€</p>
+                <p>Ville: {{ announcement.ville.nom }}</p>
+                <p>Type: {{ announcement.type_bien.nom }}</p>
+            </div>
         </div>
-        <div class="filter-item">
-            <label for="equipment">Équipement</label>
-            <input id="equipment" v-model="selectedEquipment" type="text" placeholder="Entrez l'équipement">
-        </div>
-        <button class="search-button" @click="search">
-            Rechercher
-            <i class="fas fa-search"></i>
-        </button>
+
+        
+        <!-- <div v-else>
+            <p>Aucun résultat trouvé.</p>
+        </div> -->
     </div>
-</div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 
 const selectedCity = ref('');
 const selectedPropertyType = ref('');
-const selectedEquipment = ref('');
+const announcements = ref([]); 
 
-const search = () => {
-    console.log('Searching with:', {
-        city: selectedCity.value,
-        propertyType: selectedPropertyType.value,
-        equipment: selectedEquipment.value,
-    });
+const search = async () => {
+    try {
+        const params = {};
+        if (selectedCity.value) params.city = selectedCity.value;
+        if (selectedPropertyType.value) params.propertyType = selectedPropertyType.value;
+
+        const response = await axios.get('http://localhost:3000/v1/annonce/search', { params });
+        announcements.value = response.data; 
+    } catch (error) {
+        console.error('Erreur lors de la recherche :', error);
+       
+    }
 };
+
 </script>
 
-<style>
+<style scoped>
+
 .filter-container {
     padding: 0 10%;
     display: flex;
@@ -50,13 +79,13 @@ const search = () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: rgba(255, 255, 255, 0.3); 
+    background-color: rgba(255, 255, 255, 0.3);
     padding: 10px 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
     height: 15vh;
-    backdrop-filter: blur(10px); 
+    backdrop-filter: blur(10px);
 }
 
 .filter-item {
@@ -105,5 +134,20 @@ const search = () => {
 
 .search-button:hover {
     background-color: #a05b5b;
+}
+
+/* Styles pour les résultats */
+.search-results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.announcement-box {
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 </style>
