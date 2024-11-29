@@ -34,6 +34,8 @@ model Annonce {
   villeId            Int
   nom_vendeur        String?
   img_bien           String?
+  lon               String?
+  lat               String?
   equipements        Equipement[]
   ville              Ville        @relation(fields: [villeId], references: [id])
   type_bien          TypeBien     @relation(fields: [type_bienId], references: [id])

@@ -17,4 +17,5 @@ export const getAllCommerces = async () => {
     console.error("Erreur lors de la récupération des commerces :", error);
     throw new Error("Impossible de récupérer les données des commerces.");
   }
+  
 };

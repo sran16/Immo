@@ -2,19 +2,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <nav class="navbar">
         <ul class="nav-list">
-            <li class="nav-item"><a href="#explore">Explore</a></li>
-            <li class="nav-item"><a href="#List">List</a></li>
+            <li class="nav-item"><router-link to="/publication">Explore</router-link></li>
+            <li class="nav-item"><router-link to="/announcements">List</router-link></li>
         </ul>
         <div class="nav-brand">Prectigia</div>
         <ul class="nav-list">
             <li class="nav-item">
-                <a href="#contact">Contact
+                <router-link to="#contact">Contact
                     <i class="fas fa-envelope"></i>
-                </a>
+                </router-link>
             </li>
         </ul>
     </nav>
 </template>
+
+<script>
+import { RouterLink } from 'vue-router';
+
+export default {
+  components: {
+    RouterLink
+  }
+}
+</script>
 
 <style scoped>
 .navbar {

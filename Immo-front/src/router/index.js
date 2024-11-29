@@ -4,18 +4,20 @@ import LoginView from "../views/LoginView.vue";
 import PublicationView from "@/views/PublicationView.vue";
 import AnnouncementDetail from "@/views/AnnouncementDetailView.vue";
 import AllAnnonces from "@/views/AllAnnoncesView.vue";
+import SearchResults from "@/views/SearchResults.vue";
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
-  },
-  {
-    path: "/login",
     name: "login",
     component: LoginView,
   },
+  {
+    path: "/home",
+    name: "home",
+    component: HomeView,
+  },
+
   {
     path: "/publication",
     name: "publication",
@@ -32,6 +34,11 @@ const routes = [
     path: "/announcements",
     name: "AllAnnonces",
     component: AllAnnonces,
+  },
+  {
+    path: "/search",
+    name: "SearchResults",
+    component: SearchResults,
   },
 ];
 

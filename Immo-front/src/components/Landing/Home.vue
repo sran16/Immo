@@ -32,9 +32,9 @@ export default {
     <section>
         <Cta />
     </section>
-    <section>
+    <!-- <section>
         <Box />
-    </section>
+    </section> -->
 </template>
 
 <style scoped>

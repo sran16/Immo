@@ -55,7 +55,7 @@ export default {
         .then(response => response.json())
         .then(data => {
           if (data.message === "Login successful") {
-            this.router.push('/');
+            this.router.push('/home');
           } else {
             alert("Login failed: " + data.message);
           }

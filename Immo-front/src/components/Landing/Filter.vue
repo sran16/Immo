@@ -1,72 +1,53 @@
 <template>
-    <div>
-        <div class="filter-container">
-            <div class="filter-bar">
-                <!-- Ville Filter -->
-                <div class="filter-item">
-                    <label for="city">Ville/City</label>
-                    <input id="city" v-model="selectedCity" type="text" placeholder="Entrez la ville" />
-                </div>
-
-                <!-- Type de bien Filter -->
-                <div class="filter-item">
-                    <label for="propertyType">Type de bien</label>
-                    <input id="propertyType" v-model="selectedPropertyType" type="text"
-                        placeholder="Entrez le type de bien" />
-                </div>
-
-                <!-- Recherche Button -->
-                <button class="search-button" @click="search">
-                    Rechercher
-                    <i class="fas fa-search"></i>
-                </button>
+    <div class="filter-container">
+        <div class="filter-bar">
+            <!-- Ville Filter -->
+            <div class="filter-item">
+                <label for="city">Ville/City</label>
+                <input id="city" v-model="city" type="text" placeholder="Entrez la ville" />
             </div>
-        </div>
 
-        <!-- Résultats de recherche -->
-        <div v-if="announcements.length" class="search-results">
-            <div v-for="announcement in announcements" :key="announcement.id" class="announcement-box">
-                <h2>{{ announcement.titre }}</h2>
-                <p>{{ announcement.description }}</p>
-                <p>Prix: {{ announcement.prix }}€</p>
-                <p>Ville: {{ announcement.ville.nom }}</p>
-                <p>Type: {{ announcement.type_bien.nom }}</p>
+            <!-- Type de bien Filter -->
+            <div class="filter-item">
+                <label for="propertyType">Type de bien</label>
+                <input id="propertyType" v-model="propertyType" type="text" placeholder="Entrez le type de bien" />
             </div>
-        </div>
 
-        
-        <!-- <div v-else>
-            <p>Aucun résultat trouvé.</p>
-        </div> -->
+            <!-- Recherche Button -->
+            <button class="search-button" @click="submitSearch">
+                Rechercher
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
+import { useRouter } from 'vue-router'; 
 
-const selectedCity = ref('');
-const selectedPropertyType = ref('');
-const announcements = ref([]); 
+const city = ref('');
+const propertyType = ref('');
+const router = useRouter(); 
 
-const search = async () => {
-    try {
-        const params = {};
-        if (selectedCity.value) params.city = selectedCity.value;
-        if (selectedPropertyType.value) params.propertyType = selectedPropertyType.value;
+const submitSearch = () => {
+    
+    const searchParams = {
+        city: city.value,
+        propertyType: propertyType.value,
+    };
 
-        const response = await axios.get('http://localhost:3000/v1/annonce/search', { params });
-        announcements.value = response.data; 
-    } catch (error) {
-        console.error('Erreur lors de la recherche :', error);
-       
-    }
+    
+    router.push({
+        name: 'SearchResults', 
+        query: searchParams,   
+    });
 };
-
 </script>
 
-<style scoped>
 
+
+<style scoped>
 .filter-container {
     padding: 0 10%;
     display: flex;

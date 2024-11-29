@@ -13,7 +13,7 @@
                         <li>Status: Available</li>
                         <li>Price: {{ announcement.prix }}€</li>
                     </ul>
-                    <button @click="goToDetailPage">En Savoir Plus</button>
+                    <button @click="goToDetailPage">More details</button>
                 </div>
             </div>
         </div>
@@ -55,6 +55,7 @@ export default {
     max-width: 80%;
     max-height: fit-content;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 .image-container {

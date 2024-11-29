@@ -1,6 +1,6 @@
 <template>
     <footer class="footer">
-        <p>Prestige Immobilier</p>
+        <p>Prectigia</p>
         <div class="footer-links">
             <a href="#">Ajouter une annonce</a>
             <a href="#">Consulter nos annonces</a>
@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .footer {
     border-top: 3px solid #AD8C72;
     margin-top: 20px;
@@ -54,5 +54,9 @@ export default {
     font-size: 1.5rem;
     margin: 0 0.5rem;
     cursor: pointer;
+}
+
+p {
+    color: #AD8C72;
 }
 </style>

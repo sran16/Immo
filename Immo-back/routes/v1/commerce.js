@@ -1,5 +1,6 @@
 import express from "express";
 import { getAllCommerces } from "../../commerceService.js"; 
+
 const router = express.Router();
 
 router.get("/commerces", async (req, res) => {

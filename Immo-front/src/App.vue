@@ -19,5 +19,6 @@ const userInfo = computed(() => {
   <RouterView />
 </template>
 
-<style scoped>
+<style >
+
 </style>

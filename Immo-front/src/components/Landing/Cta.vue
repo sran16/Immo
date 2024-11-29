@@ -25,10 +25,8 @@
             </div>
         </div>
     </div>
-
 </template>
 <script>
-
 export default {
     methods: {
         navigateToPublication() {
@@ -39,8 +37,6 @@ export default {
         }
     }
 }
-
-
 </script>
 
 <style scoped>

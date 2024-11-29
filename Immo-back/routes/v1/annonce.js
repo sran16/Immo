@@ -8,6 +8,7 @@ import EquipementValidator from "../../validators/EquipementValidator.js";
 import TypeBienValidator from "../../validators/TypeBienValidator.js";
 import VilleValidator from "../../validators/VilleValidator.js";
 
+import { getAllCommerces } from "../../commerceService.js";
 dotenv.config();
 
 const router = express.Router();
@@ -139,7 +140,6 @@ router.get("/search", async (req, res) => {
 
     const filters = {};
 
-
     if (city) {
       const ville = await prisma.ville.findFirst({ where: { nom: city } });
       if (ville) {
@@ -148,7 +148,6 @@ router.get("/search", async (req, res) => {
         return res.status(404).json({ error: `Ville '${city}' introuvable.` });
       }
     }
-
 
     if (propertyType) {
       const typeBien = await prisma.typeBien.findFirst({
@@ -182,6 +181,39 @@ router.get("/search", async (req, res) => {
     res.json(annonces);
   } catch (error) {
     console.error("Erreur lors de la recherche:", error);
+    res.status(500).json({ error: "Erreur interne du serveur." });
+  }
+});
+
+router.get("/commerces-annonces", async (req, res) => {
+  try {
+    const commerces = await getAllCommerces();
+
+    const annonces = await prisma.annonce.findMany({
+      include: {
+        ville: true,
+        type_bien: true,
+      },
+    });
+
+    const combinedData = { commerces, annonces };
+
+    res.json(combinedData);
+  } catch (error) {
+    console.error(
+      "Erreur lors de la récupération des commerces et annonces :",
+      error
+    );
+    res.status(500).json({ error: "Erreur interne du serveur." });
+  }
+});
+
+router.get("/commerces", async (req, res) => {
+  try {
+    const commerces = await getAllCommerces();
+    res.json(commerces);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des commerces :", error);
     res.status(500).json({ error: "Erreur interne du serveur." });
   }
 });
